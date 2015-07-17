@@ -82,6 +82,7 @@
     <ClCompile Include="..\..\algorithms\TwoSum.cpp" />
     <ClCompile Include="..\..\algorithms\TwoSum2.cpp" />
     <ClCompile Include="..\..\algorithms\TwoSum3.cpp" />
+    <ClCompile Include="..\..\algorithms\ValidPalindrome.cpp" />
     <ClCompile Include="DemoTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
