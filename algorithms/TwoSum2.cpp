@@ -17,13 +17,14 @@
 * Output: index1=1, index2=2
 * 
 * Solution:
-* O(n2) runtime, O(1) space 每 Brute force:
-* The brute force approach is simple. Loop through each element x and find if there is
-* another value that equals to target 每 x. As finding another value requires looping through
-* the rest of array, its runtime complexity is O(n2).
-* O(n) runtime, O(n) space 每 Hash table:
-* We could reduce the runtime complexity of looking up a value to O(1) using a hash map
-* that maps a value to its index.
+* O(n) runtime, O(1) space 每 Two pointers:
+* Let＊s assume we have two indices pointing to the i th and j th elements, A i and A j
+* respectively. The sum of A i and A j could only fall into one of these three possibilities:
+* i.  A i + A j > target. Increasing i isn＊t going to help us, as it makes the sum even
+* bigger. Therefore we should decrement j.
+* ii.  A i + A j < target. Decreasing j isn＊t going to help us, as it makes the sum even
+* smaller. Therefore we should increment i.
+* iii.  A i + A j == target. We have found the answer.
 * 
 ************************************************************************************************/
 
