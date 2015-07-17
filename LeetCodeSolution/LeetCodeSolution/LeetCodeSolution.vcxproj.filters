@@ -21,5 +21,11 @@
     <ClCompile Include="..\..\algorithms\TwoSum.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\algorithms\TwoSum2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\algorithms\TwoSum3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
