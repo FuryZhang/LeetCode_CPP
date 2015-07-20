@@ -5,13 +5,13 @@
 * Question:
 * Design and implement a TwoSum class. It should support the following operations: add
 * and find.
-* add(input) 每 Add the number input to an internal data structure.
-* find(value) 每 Find if there exists any pair of numbers which sum is equal to the value.
+* add(input) - Add the number input to an internal data structure.
+* find(value) - Find if there exists any pair of numbers which sum is equal to the value.
 * For example,
 * add(1); add(3); add(5); find(4)->true; find(7)->false
 * 
 * Solution:
-* add 每 O(1) runtime, find 每 O(n) runtime, O(n) space 每 Store input in hash table:
+* add - O(1) runtime, find - O(n) runtime, O(n) space - Store input in hash table:
 * A simpler approach is to store each input into a hash table. To find if a pair sum exists,
 * just iterate through the hash table in O(n) runtime. Make sure you are able to handle
 * duplicates correctly.

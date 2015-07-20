@@ -15,7 +15,7 @@ using namespace std;
 * 
 * Solution:
 * O(n) runtime, O(1) space:
-* The idea is simple, have two pointers ¨C one at the head while the other 
+* The idea is simple, have two pointers - one at the head while the other 
 * one at the tail.
 * Move them towards each other until they meet while skipping 
 * non-alphanumeric characters.

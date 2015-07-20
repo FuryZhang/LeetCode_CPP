@@ -9,7 +9,7 @@ int main()
     Solution sol;
     int test1 = sol.strStr(str1, str3); // needle is empty, return 0.
     int test2 = sol.strStr(str3, str1); // haystack is empty, return -1.
-    int test3 = sol.strStr(str2, str1); // needle's length is greater than haystack's length, return ¨C1.
+    int test3 = sol.strStr(str2, str1); // needle's length is greater than haystack's length, return -1.
     int test4 = sol.strStr(str1, str2); // normal
 
     return 0;
