@@ -17,11 +17,11 @@
 * 
 * Solution:
 * O(n) runtime, O(1) space ¨C Two pointers:
-* Let¡¯s assume we have two indices pointing to the i th and j th elements, A i and A j
+* Let's assume we have two indices pointing to the i th and j th elements, A i and A j
 * respectively. The sum of A i and A j could only fall into one of these three possibilities:
-* i.  A i + A j > target. Increasing i isn¡¯t going to help us, as it makes the sum even
+* i.  A i + A j > target. Increasing i isn't going to help us, as it makes the sum even
 * bigger. Therefore we should decrement j.
-* ii.  A i + A j < target. Decreasing j isn¡¯t going to help us, as it makes the sum even
+* ii.  A i + A j < target. Decreasing j isn't going to help us, as it makes the sum even
 * smaller. Therefore we should increment i.
 * iii.  A i + A j == target. We have found the answer.
 * 
