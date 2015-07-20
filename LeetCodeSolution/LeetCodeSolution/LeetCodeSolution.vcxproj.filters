@@ -27,6 +27,9 @@
     <ClCompile Include="..\..\algorithms\TwoSum3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\algorithms\StrStr.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\algorithms\ValidPalindrome.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
