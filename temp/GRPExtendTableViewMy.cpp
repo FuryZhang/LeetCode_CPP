@@ -1,6 +1,5 @@
 #include "GRPExtendTableView.h"
 #include "GRPDataSourceModel.h"
-#include "GRPExtendMatrix.h"
 
 void GRPExtendTableView::hideRow(int row)
 {
@@ -58,7 +57,7 @@ bool GRPExtendTableView::isRowExpanded(int row)
 {
     Q_D(GRPExtendTableView);
     Q_ASSERT(row >= 0);
-    return 0 != d->m_drawInfo->rowExpanded(row);
+    return 0 != d->m_drawInfo->m_viewItems[row].expanded;
 }
 
 void GRPExtendTableView::expandAll()
@@ -71,18 +70,18 @@ void GRPExtendTableView::expandAll()
 
         try
         {
-            for (int row = 0; row < d->m_drawInfo->rowCount(); row++)
+            for (int row = 0; row < d->m_drawInfo->m_viewItems.count(); row++)
             {
-                if (0 == d->m_drawInfo->rowExpanded(row))
+                if (0 == d->m_drawInfo->m_viewItems.at(row).expanded)
                 {
                     if (!d->m_isTree || row <= -1
-                        || d->m_drawInfo->rowCount() <= row
-                        || 0 != d->m_drawInfo->rowExpanded(row))
+                        || d->m_drawInfo->m_viewItems.count() <= row
+                        || 0 != d->m_drawInfo->m_viewItems.at(row).expanded)
                     {
                         continue;
                     }
 
-                    d->m_drawInfo->expandItem(row); // TODO
+                    d->m_drawInfo->expandItem(row);
                     afterExpandedChanged(row, true, true);
                 }
             }
@@ -109,18 +108,18 @@ void GRPExtendTableView::collapseAll()
 
         try
         {
-            for (int row = 0; row < d->m_drawInfo->rowCount(); row++)
+            for (int row = 0; row < d->m_drawInfo->m_viewItems.count(); row++)
             {
-                if (0 != d->m_drawInfo->rowExpanded(row))
+                if (0 != d->m_drawInfo->m_viewItems.at(row).expanded)
                 {
                     if (!d->m_isTree || row <= -1
-                        || d->m_drawInfo->rowCount() <= row
-                        || 0 == d->m_drawInfo->rowExpanded(row))
+                        || d->m_drawInfo->m_viewItems.count() <= row
+                        || 0 == d->m_drawInfo->m_viewItems.at(row).expanded)
                     {
                         continue;
                     }
 
-                    d->m_drawInfo->collapseItem(row);   // TODO
+                    d->m_drawInfo->collapseItem(row);
                     afterExpandedChanged(row, false, true);
                 }
             }
@@ -316,7 +315,7 @@ TreeDecorationStyle GRPExtendTableView::treeDecorationStyle() const
     return d->m_treeDecorationStyle;
 }
 
-void GRPExtendTableView::setTreeDrawInfo(CGRPExtendMatrix *tableViewDrawInfo)
+void GRPExtendTableView::setTreeDrawInfo(GlodonTreeDrawInfo *tableViewDrawInfo)
 {
     Q_D(GRPExtendTableView);
 
@@ -327,9 +326,8 @@ void GRPExtendTableView::setTreeDrawInfo(CGRPExtendMatrix *tableViewDrawInfo)
     else if (!d->m_drawInfo)
     {
         d->m_drawInfo = tableViewDrawInfo;
-        // TODO
-        /*d->m_drawInfo->m_header = d->m_verticalHeader;
-        d->m_drawInfo->setModel(d->m_model);*/
+        d->m_drawInfo->m_header = d->m_verticalHeader;
+        d->m_drawInfo->setModel(d->m_model);
     }
 }
 
@@ -339,7 +337,6 @@ GlodonTreeDrawInfo *GRPExtendTableView::treeDrawInfo()
     return d->m_drawInfo;
 }
 
-/*
 void GRPExtendTableView::setRollOut(GIntList *rollOut)
 {
     Q_D(GRPExtendTableView);
@@ -357,7 +354,6 @@ GIntList *GRPExtendTableView::rollOut()
     Q_D(GRPExtendTableView);
     return d->m_drawInfo->m_rollOut;
 }
-*/
 
 bool GRPExtendTableView::isAddChildToSelection()
 {
@@ -388,8 +384,7 @@ void GRPExtendTableView::reBuildTree()
 {
     Q_D(GRPExtendTableView);
 
-    // TODO
-//     d->m_drawInfo->init(false);
+    d->m_drawInfo->init(false);
     d->viewport->update();
     d->m_horizontalHeader->update();
     d->m_verticalHeader->update();
@@ -454,11 +449,11 @@ void GRPExtendTableView::doSetIsTree(bool value)
     d->m_verticalHeader->setIsTree(value);
     d->m_horizontalHeader->setIsTree(value);
 
-    /*if (value)
+    if (value)
     {
         if (!d->m_drawInfo)
         {
-            CGRPExtendMatrix *treeDrawInfo = new CGRPExtendMatrix(this);
+            GlodonTreeDrawInfo *treeDrawInfo = new GlodonTreeDrawInfo(this);
             treeDrawInfo->setTreeColumn(d->m_treeColumn);
             setTreeDrawInfo(treeDrawInfo);
         }
@@ -466,7 +461,7 @@ void GRPExtendTableView::doSetIsTree(bool value)
     else
     {
         d->m_drawInfo = NULL;
-    }*/
+    }
 }
 
 void GRPExtendTableView::doSetModel(QAbstractItemModel *model)
@@ -485,7 +480,7 @@ void GRPExtendTableView::doSetModel(QAbstractItemModel *model)
                 cxModel = new GlodonGroupModel(treeModel->model, this);
                 d->m_dataModel = treeModel->model;
                 treeModel->model = cxModel;
-//                 d->m_drawInfo->setModel(cxModel);
+                d->m_drawInfo->setModel(cxModel);
                 model = treeModel;
             }
             else
@@ -494,7 +489,7 @@ void GRPExtendTableView::doSetModel(QAbstractItemModel *model)
                 d->m_model = cxModel;
                 doSetIsTree(true);
                 GlodonTreeModel *treeModel = new GlodonTreeModel(cxModel, this);
-//                 treeModel->drawInfo = d->m_drawInfo;
+                treeModel->drawInfo = d->m_drawInfo;
                 d->m_dataModel = model;
                 model = treeModel;
             }
@@ -511,7 +506,7 @@ void GRPExtendTableView::doSetModel(QAbstractItemModel *model)
     {
         if (d->m_drawInfo->model != model)
         {
-//             d->m_drawInfo->setModel(model);
+            d->m_drawInfo->setModel(model);
         }
 
         d->m_dataModel = model;
