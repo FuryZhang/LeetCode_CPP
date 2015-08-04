@@ -8,6 +8,7 @@
 
 class GRPExtendTableViewPrivate;
 class GRPExtendTableView;
+class CGRPExtendMatrix;
 
 class GRPExtendTableView : public GLDTableView
 {
@@ -119,8 +120,8 @@ public:
     * @brief 设置卷展栏
     * @param rollOut
     */
-    void setRollOut(GIntList *rollOut);
-    GIntList *rollOut();
+    /*void setRollOut(GIntList *rollOut);
+    GIntList *rollOut();*/
 
     /**
     * @brief 在树形结构时，选择折叠的父，是否同时选择子
@@ -307,7 +308,7 @@ public:
     bool m_addChildInSelection;     //树形结构时，是否把选中且折叠的子加入到selection中
     int m_treeColumn;               //显示树形结构的列
 
-    GlodonTreeDrawInfo *m_drawInfo;
+    CGRPExtendMatrix *m_drawInfo;
     TreeDecorationStyle m_treeDecorationStyle;
 
 };
